@@ -14,7 +14,26 @@
 #   about_triangle_project_2.rb
 #
 def triangle(a, b, c)
-  # WRITE THIS CODE
+  # validation
+  validate_triangle(a,b,c)
+  # calculate type of triangle
+  if a == b
+    if b == c
+      return :equilateral
+    end
+      return :isosceles
+  end
+  if b == c || a == c
+      return :isosceles
+  end
+  return :scalene
+end
+
+def validate_triangle(a,b,c)
+  unless a > 0 && b > 0 && c > 0 && a + b > c && a + c > b && b + c > a
+    raise TriangleError, %{The sides of the triangle are invalid: Every side must have a length bigger than 0 and
+        the triangle must adhere to the 'triangle inequality' principle}
+  end
 end
 
 # Error class used in part 2.  No need to change this code.
