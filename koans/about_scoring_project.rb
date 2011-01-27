@@ -29,8 +29,43 @@ require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 #
 # Your goal is to write the score method.
 
+#dice is an array with the roll result
+SET_OF_THREE_ONES = 1000
+SET_OF_THREE = 100
+ONE_SCORE = 100
+FIVE_SCORE = 50
+
 def score(dice)
-  # You need to write this method
+  score = 0
+  uniqueRolls = dice.uniq
+
+  uniqueRolls.each do |uniqueRoll|
+    countOfUniqueRoll = dice.count(uniqueRoll)
+    if countOfUniqueRoll >= 3
+      score += SET_OF_THREE_ONES + ONE_SCORE * (countOfUniqueRoll - 3) if countOfUniqueRoll >= 3 and uniqueRoll == 1
+      score += SET_OF_THREE * 5 + FIVE_SCORE * (countOfUniqueRoll - 3) if countOfUniqueRoll >= 3 and uniqueRoll == 5
+      score += SET_OF_THREE * uniqueRoll if countOfUniqueRoll >= 3 and uniqueRoll != 1 and uniqueRoll != 5
+    else
+      score += ONE_SCORE * countOfUniqueRoll if countOfUniqueRoll < 3 and uniqueRoll == 1
+      score += FIVE_SCORE * countOfUniqueRoll if countOfUniqueRoll < 3 and uniqueRoll == 5
+    end
+  end
+  return score
+end
+
+def score_version2(dice)
+    uniqueRolls.each do |uniqueRoll|
+    countOfUniqueRoll = dice.count(uniqueRoll)
+    if uniqueRoll == 1
+      score += SET_OF_THREE_ONES + ONE_SCORE * countOfUniqueRoll - 3 if countOfUniqueRoll >= 3
+      score += ONE_SCORE * countOfUniqueRoll if countOfUniqueRoll < 3
+    elsif uniqueRoll == 5
+      score += SET_OF_THREE * 5 + FIVE_SCORE * countOfUniqueRoll - 3 if countOfUniqueRoll >= 3
+      score += FIVE_SCORE * countOfUniqueRoll if countOfUniqueRoll < 3
+    else
+      score += SET_OF_THREE * uniqueRoll if countOfUniqueRoll >= 3
+    end
+  end
 end
 
 class AboutScoringProject < EdgeCase::Koan
